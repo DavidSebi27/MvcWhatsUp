@@ -8,9 +8,9 @@ namespace MvcWhatsUp.Controllers
         {
             List<Models.User> users =
                 [
-                    new Models.User(1, "Name1", "TelephoneNum", "Email", "Passpass"),
-                    new Models.User(2, "Name2", "TelephoneNum2", "Email2", "Passpass2"),
-                    new Models.User(3, "Name3", "TelephoneNum3", "Email3", "Passpass3"),
+                    new Models.User(0001, "Michael Jackson", "0104", "heehee@hotmail.com", "thAtsIgnOrAnt"),
+                    new Models.User(0078, "Tonald Drump", "0102", "maga@usa.com", "chinaISBAD"),
+                    new Models.User(0673, "Heilon Musketeer", "0012", "definitelynotanidiotlol@teslamail.com", "TheSmartestPersonAlive"),
 
                 ];
             
