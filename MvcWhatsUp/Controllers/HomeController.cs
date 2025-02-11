@@ -39,13 +39,12 @@ namespace MvcWhatsUp.Controllers
         {
             return $"Message {message} has been sent by {name}";
         }
-
-        public IActionResult User()
+        public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public string User(string name, string password)
+        public string Login(string name, string password)
         {
             return $"Logging {name} in...";
         }
