@@ -1,0 +1,15 @@
+﻿@{
+	ViewData["Title"] = "Send message";
+}
+
+<h1>Send message</h1>
+
+<form action="/Chats/SendMessage" method="POST">
+	<label for="name">Name: </label>
+	<input type="text" id="name" name="Name" required/>
+	
+	<label for="message">Message: </label>
+	<input type="text" id="message" name="MessageText" required/>
+
+	<button type="submit" class="btn btn-dark">Send</button>
+</form>

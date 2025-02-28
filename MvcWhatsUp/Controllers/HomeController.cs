@@ -29,16 +29,6 @@ namespace MvcWhatsUp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult SendMessage()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public string SendMessage(string name, string message)
-        {
-            return $"Message {message} has been sent by {name}";
-        }
         public IActionResult Login()
         {
             return View();

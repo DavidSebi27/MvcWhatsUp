@@ -8,5 +8,15 @@ namespace MvcWhatsUp.Controllers
         {
             return View();
         }
+        public IActionResult SendMessage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public string SendMessage(Models.SimpleMessage message)
+        {
+            return $"Message {message.MessageText} has been sent by {message.Name}";
+        }
     }
 }

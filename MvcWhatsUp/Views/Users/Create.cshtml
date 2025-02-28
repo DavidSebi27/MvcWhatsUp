@@ -1,0 +1,35 @@
+﻿@model MvcWhatsUp.Models.User
+@{
+	ViewData["Title"] = "Create User";
+}
+
+<h4>New User</h4>
+
+<form action="/Users/Create" method="POST">
+    <fieldset>
+        <br />
+        <br />
+
+        <label for="UserName">Your Name:</label>
+        <input type="text" id="name" name="UserName" required value="@Model?.UserName" />
+        <br />
+        <br />
+
+        <label for="MobileNumber">Your Mobile Number:</label>
+        <input type="number" id="number" name="MobileNumber" required value="@Model?.MobileNumber" />
+        <br />
+        <br />
+
+        <label for="EmailAddress">Your Email address:</label>
+        <input type="email" id="email" name="EmailAddress" required value="@Model?.EmailAddress" />
+        <br />
+        <br />
+
+        <label for="Password">Your desired password:</label>
+        <input type="password" id="password" name="Password" required value="@Model?.Password" />
+        <br />
+        <br />
+
+        <button type="create" class="btn btn-dark">Create!</button>
+    </fieldset>
+</form>
