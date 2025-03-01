@@ -1,26 +1,25 @@
-﻿@{
-	ViewData["Title"] = "Login";
+﻿@model MvcWhatsUp.Models.User
+
+@{
+    ViewData["Title"] = "Login";
 }
 
 <h1>Log in!</h1>
-<br />
-<br />
-<br />
-<form action="/Home/Login" method="POST">
+
+<form asp-controller="Home" asp-action="Login" method="post" class="mt-4">
     <fieldset>
-        <br />
-        <br />
+        <div class="mb-3">
+            <label asp-for="UserName" class="form-label">Your Name:</label>
+            <input asp-for="UserName" class="form-control" required placeholder="Enter your username">
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
 
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required placeholder="Enter your username">
-        <br />
-        <br />
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Your Password:</label>
+            <input asp-for="Password" type="password" class="form-control" required placeholder="Enter your password">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
 
-        <label for="password">Your Password:</label>
-        <input type="password" id="password" name="password" required placeholder="Enter your password">
-        <br />
-        <br />
-
-        <button type="login" class="btn btn-dark">Login</button>
-    </fieldset> 
+        <button type="submit" class="btn btn-dark">Login</button>
+    </fieldset>
 </form>

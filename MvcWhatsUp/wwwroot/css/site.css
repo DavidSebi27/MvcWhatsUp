@@ -1,47 +1,201 @@
+/* Shadow the Hedgehog Inspired Dark Theme - Professional Edition */
+:root {
+    --primary-color: #ff0000; /* Shadow's iconic red */
+    --secondary-color: #ffffff; /* White for contrast */
+    --background-color: #0a0a0a; /* Darker black for depth */
+    --accent-color: #ff4500; /* Orange-red for highlights */
+    --border-color: #333333; /* Dark gray for borders */
+    --hover-color: #ff6347; /* Brighter red for hover effects */
+    --shadow-color: rgba(255, 0, 0, 0.5); /* Red glow for shadows */
+    --card-background: #1a1a1a; /* Slightly lighter black for cards */
+    --card-shadow: 0 4px 8px rgba(255, 0, 0, 0.3); /* Glowing shadow for cards */
+}
+
+/* General Styles */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-    font-family: Arial, sans-serif;
-    color: #000000;
-    text-align: center;
-    padding: 30px;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
 }
 
-h1 {
-    color: #000000;
-}
-
-.policy-section {
-    margin: 20px auto;
-    max-width: 600px;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: left;
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px var(--shadow-color);
 }
 
 a {
-    color: purple;
+    color: var(--primary-color);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-a:hover {
-    text-decoration: underline;
+    a:hover {
+        color: var(--hover-color);
+        text-decoration: underline;
+    }
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--background-color) !important;
+    border-bottom: 2px solid var(--primary-color);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.navbar-brand, .nav-link {
+    color: var(--secondary-color) !important;
+    text-shadow: 1px 1px 2px var(--shadow-color);
+}
+
+    .nav-link:hover {
+        color: var(--hover-color) !important;
+    }
+
+.navbar-toggler {
+    border-color: var(--primary-color);
+}
+
+.navbar-toggler-icon {
+    background-color: var(--secondary-color);
+}
+
+/* Card Styles (for user lists, forms, etc.) */
+.card {
+    background-color: var(--card-background);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    margin: 20px 0;
+}
+
+    .card h2 {
+        margin-top: 0;
+    }
+
+/* Form Styles */
+form {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 600px;
+    border: 1px solid var(--primary-color);
+    box-shadow: var(--card-shadow);
+}
+
+label {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    background-color: #222222;
+    color: var(--secondary-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 8px var(--shadow-color);
+    }
+
+button[type="submit"],
+.btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
     cursor: pointer;
+    text-shadow: 1px 1px 2px var(--shadow-color);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    button[type="submit"]:hover,
+    .btn:hover {
+        background-color: var(--hover-color);
+        box-shadow: 0 0 10px var(--shadow-color);
+    }
+
+/* Policy Section Styles */
+.policy-section {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid var(--primary-color);
+    box-shadow: var(--card-shadow);
+}
+
+    .policy-section h2 {
+        color: var(--primary-color);
+        text-shadow: 1px 1px 2px var(--shadow-color);
+    }
+
+    .policy-section ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+        .policy-section ul li {
+            color: var(--secondary-color);
+        }
+
+/* Footer Styles */
+.footer {
+    background-color: var(--background-color);
+    border-top: 2px solid var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 0;
+    text-align: center;
+    text-shadow: 1px 1px 2px var(--shadow-color);
+}
+
+    .footer a {
+        color: var(--primary-color);
+    }
+
+        .footer a:hover {
+            color: var(--hover-color);
+        }
+
+/* Button Glow Effect */
+.btn-glow {
+    animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+    }
+
+    to {
+        box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+    }
 }

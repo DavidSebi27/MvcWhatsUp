@@ -1,15 +1,20 @@
-﻿@{
-	ViewData["Title"] = "Send message";
+﻿@model MvcWhatsUp.Models.SimpleMessage
+@{
+    ViewData["Title"] = "Send Message";
 }
 
-<h1>Send message</h1>
+<h1>Send a Message</h1>
 
-<form action="/Chats/SendMessage" method="POST">
-	<label for="name">Name: </label>
-	<input type="text" id="name" name="Name" required/>
-	
-	<label for="message">Message: </label>
-	<input type="text" id="message" name="MessageText" required/>
+<form asp-controller="Chats" asp-action="SendMessage" method="post" class="mt-3">
+    <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input type="text" id="name" name="Name" asp-for="Name" class="form-control" required />
+    </div>
 
-	<button type="submit" class="btn btn-dark">Send</button>
+    <div class="mb-3">
+        <label for="message" class="form-label">Message:</label>
+        <input type="text" id="message" name="MessageText" asp-for="MessageText" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-dark">Send</button>
 </form>
