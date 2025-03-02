@@ -1,201 +1,381 @@
-/* Shadow the Hedgehog Inspired Dark Theme - Professional Edition */
-:root {
-    --primary-color: #ff0000; /* Shadow's iconic red */
-    --secondary-color: #ffffff; /* White for contrast */
-    --background-color: #0a0a0a; /* Darker black for depth */
-    --accent-color: #ff4500; /* Orange-red for highlights */
-    --border-color: #333333; /* Dark gray for borders */
-    --hover-color: #ff6347; /* Brighter red for hover effects */
-    --shadow-color: rgba(255, 0, 0, 0.5); /* Red glow for shadows */
-    --card-background: #1a1a1a; /* Slightly lighter black for cards */
-    --card-shadow: 0 4px 8px rgba(255, 0, 0, 0.3); /* Glowing shadow for cards */
-}
-
-/* General Styles */
-html {
-    font-size: 14px;
-    position: relative;
-    min-height: 100%;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
+﻿/* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--secondary-color);
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px var(--shadow-color);
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-    a:hover {
-        color: var(--hover-color);
-        text-decoration: underline;
-    }
-
 /* Navbar Styles */
 .navbar {
-    background-color: var(--background-color) !important;
-    border-bottom: 2px solid var(--primary-color);
-    box-shadow: 0 4px 8px var(--shadow-color);
+    background: linear-gradient(90deg, #111 30%, #400000 100%);
+    border-bottom: 3px solid #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    padding: 10px 0;
 }
 
-.navbar-brand, .nav-link {
-    color: var(--secondary-color) !important;
-    text-shadow: 1px 1px 2px var(--shadow-color);
+.navbar-brand {
+    color: #ff0000 !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px #ff0000;
+    font-size: 1.5rem;
+    transition: all 0.3s ease-in-out;
 }
 
-    .nav-link:hover {
-        color: var(--hover-color) !important;
+    .navbar-brand:hover {
+        text-shadow: 0 0 10px #ff4d4d;
     }
 
-.navbar-toggler {
-    border-color: var(--primary-color);
+.navbar-nav .nav-link {
+    color: #bbbbbb !important;
+    transition: all 0.3s ease-in-out;
+    font-weight: 500;
+    margin: 0 10px;
 }
 
-.navbar-toggler-icon {
-    background-color: var(--secondary-color);
+    .navbar-nav .nav-link:hover {
+        color: #ff4d4d !important;
+        text-shadow: 0 0 5px #ff4d4d;
+        transform: translateY(-2px);
+    }
+
+/* General Button Styles */
+.btn, .shadow-button {
+    background: linear-gradient(145deg, #222, #111);
+    color: #ff4d4d;
+    border: 2px solid #ff0000;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 20px;
 }
 
-/* Card Styles (for user lists, forms, etc.) */
-.card {
-    background-color: var(--card-background);
-    border: 1px solid var(--primary-color);
-    border-radius: 8px;
-    box-shadow: var(--card-shadow);
-    padding: 20px;
-    margin: 20px 0;
-}
-
-    .card h2 {
-        margin-top: 0;
+    .btn:hover, .shadow-button:hover {
+        background: #400000;
+        color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+        transform: translateY(-2px);
     }
 
 /* Form Styles */
-form {
-    background-color: var(--card-background);
-    padding: 20px;
-    border-radius: 8px;
-    margin: 20px auto;
-    max-width: 600px;
-    border: 1px solid var(--primary-color);
-    box-shadow: var(--card-shadow);
-}
-
-label {
-    color: var(--secondary-color);
-    font-weight: bold;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-textarea {
-    width: 100%;
+.form-control,
+.shadow-input {
+    background-color: #222 !important;
+    color: #ffffff !important;
+    caret-color: #ff4d4d;
+    border: 2px solid #ff0000;
+    transition: all 0.3s ease-in-out;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid var(--primary-color);
-    border-radius: 4px;
-    background-color: #222222;
-    color: var(--secondary-color);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 5px;
 }
 
-    input[type="text"]:focus,
-    input[type="password"]:focus,
-    input[type="email"]:focus,
-    textarea:focus {
-        border-color: var(--accent-color);
-        box-shadow: 0 0 8px var(--shadow-color);
+    .form-control::placeholder,
+    .shadow-input::placeholder {
+        color: #888 !important;
     }
 
-button[type="submit"],
-.btn {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-shadow: 1px 1px 2px var(--shadow-color);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    .form-control:focus,
+    .shadow-input:focus {
+        background-color: #222 !important;
+        color: #ffffff !important;
+        border-color: #ff4d4d;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        outline: none;
+    }
+
+input[type="tel"] {
+    -moz-appearance: textfield;
 }
 
-    button[type="submit"]:hover,
-    .btn:hover {
-        background-color: var(--hover-color);
-        box-shadow: 0 0 10px var(--shadow-color);
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 
-/* Policy Section Styles */
-.policy-section {
-    background-color: var(--card-background);
+/* Container and Section Styles */
+.container {
+    background: #111;
     padding: 20px;
-    border-radius: 8px;
-    margin: 20px 0;
-    border: 1px solid var(--primary-color);
-    box-shadow: var(--card-shadow);
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.3);
+    margin: 20px auto;
+    max-width: 1200px;
 }
 
-    .policy-section h2 {
-        color: var(--primary-color);
-        text-shadow: 1px 1px 2px var(--shadow-color);
-    }
-
-    .policy-section ul {
-        list-style-type: disc;
-        padding-left: 20px;
-    }
-
-        .policy-section ul li {
-            color: var(--secondary-color);
-        }
+.section-title {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
 
 /* Footer Styles */
 .footer {
-    background-color: var(--background-color);
-    border-top: 2px solid var(--primary-color);
-    color: var(--secondary-color);
-    padding: 10px 0;
+    background: linear-gradient(90deg, #400000, #111);
+    padding: 15px;
     text-align: center;
-    text-shadow: 1px 1px 2px var(--shadow-color);
+    border-top: 3px solid #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    margin-top: 40px;
 }
 
     .footer a {
-        color: var(--primary-color);
+        color: #ff4d4d;
+        transition: color 0.3s;
+        font-weight: bold;
     }
 
         .footer a:hover {
-            color: var(--hover-color);
+            color: #ffffff;
+            text-shadow: 0 0 5px #ff4d4d;
         }
 
-/* Button Glow Effect */
-.btn-glow {
+/* Heading Styles */
+h1, h2 {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+/* List Styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+    ul li {
+        padding: 10px 0;
+        border-bottom: 1px solid #333;
+    }
+
+/* Error Message Styles */
+.text-danger {
+    color: #ff4d4d !important;
+    font-weight: bold;
+}
+
+/* Link Styles */
+a {
+    color: #ff4d4d;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+    a:hover {
+        color: #ffffff;
+        text-shadow: 0 0 5px #ff4d4d;
+    }
+
+/* Glow Animation */
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px #ff0000;
+    }
+
+    50% {
+        text-shadow: 0 0 15px #ff4d4d;
+    }
+
+    100% {
+        text-shadow: 0 0 5px #ff0000;
+    }
+}
+
+.glowing {
     animation: glow 1.5s infinite alternate;
 }
 
-@keyframes glow {
-    from {
-        box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+/* Table Styles */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #111;
+    color: #e0e0e0;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    margin: 20px 0;
+}
+
+    .user-table thead {
+        background: linear-gradient(90deg, #400000, #111);
+        color: #ff4d4d;
+        font-weight: bold;
+        text-shadow: 0 0 5px #ff0000;
     }
 
-    to {
-        box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+    .user-table th {
+        padding: 12px;
+        border-bottom: 2px solid #ff0000;
     }
+
+    .user-table tbody tr {
+        background-color: #1a1a1a;
+    }
+
+        .user-table tbody tr:nth-child(even) {
+            background-color: #222;
+        }
+
+    .user-table td {
+        padding: 10px;
+        border-bottom: 1px solid #ff0000;
+    }
+
+.username {
+    color: #ff4d4d !important;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
 }
+
+/* Form Container */
+.agent-form {
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.6);
+    width: 60%;
+    margin: auto;
+}
+
+/* Form Title */
+.form-title {
+    text-align: center;
+    color: #ff4d4d;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+}
+
+/* Action Links */
+.action-link {
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+    font-size: 0.9rem; 
+}
+
+    .action-link:hover {
+        text-decoration: underline;
+    }
+
+/* Edit Link */
+.edit-link {
+    color: #a0a0a0; 
+}
+
+    .edit-link:hover {
+        color: #ff4d4d; 
+    }
+
+/* Delete Link */
+.delete-link {
+    color: #a0a0a0; 
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+    .delete-link:hover {
+        color: #ff4d4d; 
+    }
+
+/* Action Separator */
+.action-separator {
+    margin: 0 8px;
+    color: #666; 
+}
+
+/* Checkbox styling */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+.checkbox-input {
+    width: 30px; 
+    height: 30px; 
+    background-color: #222;
+    border: 3px solid #ff0000; 
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    appearance: none;
+    outline: none;
+}
+
+    .checkbox-input:checked {
+        background-color: #ff0000;
+        border-color: #ff4d4d;
+        box-shadow: 0 0 5px #ff4d4d;
+    }
+
+        
+        .checkbox-input:checked::before {
+            content: '\2714'; /* Check mark */
+            position: absolute;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            color: #fff;
+            font-size: 18px; 
+        }
+
+
+.checkbox-label {
+    color: #e0e0e0;
+    font-size: 1.2rem; 
+    margin-left: 15px; 
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+
+.checkbox-input:hover + .checkbox-label,
+.checkbox-input:checked + .checkbox-label {
+    color: #ff4d4d;
+    text-shadow: 0 0 5px #ff4d4d;
+}
+
+/* Cancel button styling */
+.cancel-button {
+    background: #222;
+    color: #aaa;
+    border: 2px solid #444;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    margin-top: 20px;
+}
+
+    .cancel-button:hover {
+        background: #333;
+        color: #fff;
+        border-color: #ff4d4d;
+    }
+
+    .cancel-button:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+    }

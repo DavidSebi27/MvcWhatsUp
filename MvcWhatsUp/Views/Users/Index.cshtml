@@ -1,34 +1,44 @@
 ﻿@model List<MvcWhatsUp.Models.User>
 
 @{
-	ViewData["Title"] = "Users";
+	ViewData["Title"] = "Chaos Agents";
 }
 
 <div class="text-center">
-	<h1 class="display-4">Usey usey user man</h1>
-	<p>Num of users in the list: @Model.Count</p>
+    <h1 class="display-4">Chaos Agents</h1>
+    <p>Number of operatives in the network: <span class="text-danger">@Model.Count</span></p>
 </div>
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>Id</th>
-			<th>Name</th>
-			<th>Mobile number</th>
-			<th>Email address</th>
-		</tr>
-	</thead>
-	<tbody>
-		@{
-			foreach (var user in Model)
-			{
-				<tr>
-					<td>@user.UserId</td>
-					<td>@user.UserName</td>
-					<td>@user.MobileNumber</td>
-					<td>@user.EmailAddress</td>
-				</tr>
-			}
-		}
-	</tbody>
+<div class="mb-4">
+    <a href="/Users/Create" class="btn btn-dark">Enlist New Agent</a>
+</div>
+
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>Agent ID</th>
+            <th>Alias</th>
+            <th>Chaos Communicator</th>
+            <th>Contact Signal</th>
+            <th>Agent override</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td class="username">@user.UserName</td>
+                <td>@user.MobileNumber</td>
+                <td>@user.EmailAddress</td>
+                <td>
+                    <!-- Edit Link -->
+                    <a href="/Users/Edit/@user.UserId" class="action-link edit-link">Edit</a>
+                    <span class="action-separator">|</span>
+                    <!-- Delete Link -->
+                    <a href="/Users/Delete/@user.UserId" class="action-link delete-link">Terminate</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

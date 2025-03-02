@@ -3,18 +3,18 @@
     ViewData["Title"] = "Send Message";
 }
 
-<h1>Send a Message</h1>
+<h1>Transmit Chaos</h1>
 
 <form asp-controller="Chats" asp-action="SendMessage" method="post" class="mt-3">
     <div class="mb-3">
-        <label for="name" class="form-label">Name:</label>
+        <label for="name" class="form-label">Your Alias: </label>
         <input type="text" id="name" name="Name" asp-for="Name" class="form-control" required />
     </div>
 
     <div class="mb-3">
-        <label for="message" class="form-label">Message:</label>
+        <label for="message" class="form-label">Chaos Message: </label>
         <input type="text" id="message" name="MessageText" asp-for="MessageText" class="form-control" required />
     </div>
 
-    <button type="submit" class="btn btn-dark">Send</button>
+    <button type="submit" class="btn btn-dark">Broadcast</button>
 </form>

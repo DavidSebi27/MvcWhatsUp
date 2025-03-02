@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model MvcWhatsUp.Models.User
 @{
+    ViewData["Title"] = "Edit Agent";
 }
+
+<h2 class="form-title">Edit Agent Profile</h2>
+
+<form action="/Users/Edit/@Model?.UserId" method="POST" class="agent-form">
+    <fieldset>
+        <div class="form-group">
+            <label for="UserName" class="form-label">Alias:</label>
+            <input type="text" id="UserName" name="UserName" required
+                   placeholder="Enter your new alias, agent" class="form-control shadow-input" />
+        </div>
+
+        <div class="form-group">
+            <label for="MobileNumber" class="form-label">Chaos Communicator:</label>
+            <input type="tel" id="MobileNumber" name="MobileNumber" required
+                   placeholder="Update your communicator code" class="form-control shadow-input" pattern="[0-9+ -]*" />
+        </div>
+
+        <div class="form-group">
+            <label for="EmailAddress" class="form-label">Contact Signal:</label>
+            <input type="email" id="EmailAddress" name="EmailAddress" required
+                   placeholder="New signal for your mission" class="form-control shadow-input" />
+        </div>
+
+        <div class="form-group">
+            <label for="Password" class="form-label">Encryption Key:</label>
+            <input type="password" id="Password" name="Password" required
+                   placeholder="Set your new encryption key, agent" class="form-control shadow-input" />
+        </div>
+
+        <button type="submit" class="btn shadow-button">Lock in Changes</button>
+        <a href="/Users/Index" class="btn shadow-button cancel-button">Cancel</a>
+    </fieldset>
+</form>

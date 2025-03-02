@@ -1,0 +1,26 @@
+﻿@model MvcWhatsUp.Models.User
+
+@{
+    ViewData["Title"] = "Access Terminal";
+}
+
+<h1>Access Terminal</h1>
+<p>Enter your credentials to access the Chaos Network. Unauthorized access is prohibited.</p>
+
+<form asp-controller="Home" asp-action="Login" method="post" class="mt-4">
+    <fieldset>
+        <div class="mb-3">
+            <label asp-for="UserName" class="form-label">Agent Alias:</label>
+            <input asp-for="UserName" class="form-control" required placeholder="Enter your alias">
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Encryption Key:</label>
+            <input asp-for="Password" type="password" class="form-control" required placeholder="Enter your encryption key">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Initiate Access</button>
+    </fieldset>
+</form>

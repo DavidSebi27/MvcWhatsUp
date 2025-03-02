@@ -1,35 +1,36 @@
 ﻿@model MvcWhatsUp.Models.User
 @{
-	ViewData["Title"] = "Create User";
+    ViewData["Title"] = "Enlist a New Agent";
 }
 
-<h4>New User</h4>
+<h2 class="form-title">Enlist a New Agent</h2>
 
-<form action="/Users/Create" method="POST">
+<form action="/Users/Create" method="POST" class="agent-form">
     <fieldset>
-        <br />
-        <br />
+        <div class="form-group">
+            <label for="UserName" class="form-label">Agent Alias:</label>
+            <input type="text" id="UserName" name="UserName" required value="@Model?.UserName"
+                   placeholder="Enter your alias" class="form-control shadow-input" />
+        </div>
 
-        <label for="UserName">Your Name:</label>
-        <input type="text" id="name" name="UserName" required value="@Model?.UserName" />
-        <br />
-        <br />
+        <div class="form-group">
+            <label for="MobileNumber" class="form-label">Chaos Communicator:</label>
+            <input type="tel" id="MobileNumber" name="MobileNumber" required value="@Model?.MobileNumber"
+                   placeholder="Enter your communicator code" class="form-control shadow-input" pattern="[0-9+ -]*" />
+        </div>
 
-        <label for="MobileNumber">Your Mobile Number:</label>
-        <input type="number" id="number" name="MobileNumber" required value="@Model?.MobileNumber" />
-        <br />
-        <br />
+        <div class="form-group">
+            <label for="EmailAddress" class="form-label">Contact Signal:</label>
+            <input type="email" id="EmailAddress" name="EmailAddress" required value="@Model?.EmailAddress"
+                   placeholder="Enter your contact signal" class="form-control shadow-input" />
+        </div>
 
-        <label for="EmailAddress">Your Email address:</label>
-        <input type="email" id="email" name="EmailAddress" required value="@Model?.EmailAddress" />
-        <br />
-        <br />
+        <div class="form-group">
+            <label for="Password" class="form-label">Encryption Key:</label>
+            <input type="password" id="Password" name="Password" required value="@Model?.Password"
+                   placeholder="Enter your encryption key" class="form-control shadow-input" />
+        </div>
 
-        <label for="Password">Your desired password:</label>
-        <input type="password" id="password" name="Password" required value="@Model?.Password" />
-        <br />
-        <br />
-
-        <button type="create" class="btn btn-dark">Create!</button>
+        <button type="submit" class="btn shadow-button">Enlist Agent</button>
     </fieldset>
 </form>

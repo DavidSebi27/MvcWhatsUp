@@ -31,7 +31,7 @@ namespace MvcWhatsUp.Repositories
             return users.FirstOrDefault(x => x.UserId == userId);
         }
 
-        public void Add(Models.User user)
+        public void Add(User user)
         {
             if (users.Any(u => u.UserId == user.UserId))
             {
@@ -40,12 +40,12 @@ namespace MvcWhatsUp.Repositories
             users.Add(user);
         }
 
-        public void Update(Models.User user)
+        public void Update(User user)
         {
             var existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
             if (existingUser == null)
             {
-                throw new InvalidOperationException("User not found. Maybe they used Chaos Control to escape?");
+                throw new InvalidOperationException("Agent not found. Perhaps they vanished into the Chaos Void.");
             }
             existingUser.UserName = user.UserName;
             existingUser.MobileNumber = user.MobileNumber;
@@ -53,16 +53,21 @@ namespace MvcWhatsUp.Repositories
             existingUser.Password = user.Password;
         }
 
-        public void Delete(int userId)
+        public void Delete(User user)
         {
-            var user = users.FirstOrDefault(u => u.UserId == userId);
-            if (user != null)
+            if (user == null)
             {
-                users.Remove(user);
+                throw new ArgumentNullException(nameof(user), "Agent object cannot be null.");
+            }
+
+            var existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
+            if (existingUser != null)
+            {
+                users.Remove(existingUser);
             }
             else
             {
-                throw new InvalidOperationException("User not found. They must have gone Super Sonic!");
+                throw new InvalidOperationException("Agent not found. They’ve gone rogue and disappeared into the shadows.");
             }
         }
     }
