@@ -9,19 +9,20 @@
     <fieldset>
         <div class="form-group">
             <label for="UserName" class="form-label">Alias:</label>
-            <input type="text" id="UserName" name="UserName" required
+            <input type="text" id="UserName" name="UserName" required value="@Model.UserName"
                    placeholder="Enter your new alias, agent" class="form-control shadow-input" />
+            <input type="hidden" name="UserId" value="@Model.UserId" /> <!--IMPORTANT TO ACTUALLY RECIEVE AN ID-->
         </div>
 
         <div class="form-group">
             <label for="MobileNumber" class="form-label">Chaos Communicator:</label>
-            <input type="tel" id="MobileNumber" name="MobileNumber" required
+            <input type="tel" id="MobileNumber" name="MobileNumber" required value="@Model.MobileNumber"
                    placeholder="Update your communicator code" class="form-control shadow-input" pattern="[0-9+ -]*" />
         </div>
 
         <div class="form-group">
             <label for="EmailAddress" class="form-label">Contact Signal:</label>
-            <input type="email" id="EmailAddress" name="EmailAddress" required
+            <input type="email" id="EmailAddress" name="EmailAddress" required value="@Model.EmailAddress"
                    placeholder="New signal for your mission" class="form-control shadow-input" />
         </div>
 

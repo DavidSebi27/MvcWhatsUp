@@ -8,13 +8,13 @@ namespace MvcWhatsUp.Controllers
     {
         private readonly IUsersRepository _usersRepository;
 
-        public UsersController()
+        public UsersController(IUsersRepository usersRepository) // Without this it just doesnt save (?) - This is where we inject the thing
         {
-            _usersRepository = new DummyUsersRepository();
+            _usersRepository = usersRepository;
         }
         public IActionResult Index()
         {
-            List<Models.User> users = _usersRepository.GetAll();
+           List<User> users = _usersRepository.GetAll();
             return View(users);
         }
 
@@ -91,11 +91,11 @@ namespace MvcWhatsUp.Controllers
             try
             {
                 _usersRepository.Delete(user);
-
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
+
                 return View(user);
             }
         }

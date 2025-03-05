@@ -8,11 +8,20 @@
         public string EmailAddress { get; set; }
         public string Password { get; set; }
 
+        public User()
+        {
+            UserId = 0;
+            UserName = "";
+            MobileNumber = "";
+            EmailAddress = "";
+            Password = "";
+        }
+        
         public User(int userId, string userName, string mobileNumber, string emailAddress, string password)
         {
             UserId = userId;
             UserName = userName;
-            MobileNumber = mobileNumber;
+            MobileNumber = mobileNumber; 
             EmailAddress = emailAddress;
             Password = password;
         }

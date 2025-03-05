@@ -33,10 +33,10 @@
                 <td>@user.EmailAddress</td>
                 <td>
                     <!-- Edit Link -->
-                    <a href="/Users/Edit/@user.UserId" class="action-link edit-link">Edit</a>
+                    <a href="/Users/Edit/@user.UserId" class="action-link edit-link" name="UserID">Edit</a>
                     <span class="action-separator">|</span>
                     <!-- Delete Link -->
-                    <a href="/Users/Delete/@user.UserId" class="action-link delete-link">Terminate</a>
+                    <a href="/Users/Delete/@user.UserId" class="action-link delete-link" name="UserId">Terminate</a>
                 </td>
             </tr>
         }

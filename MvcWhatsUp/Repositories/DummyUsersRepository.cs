@@ -7,26 +7,31 @@ namespace MvcWhatsUp.Repositories
 {
     public class DummyUsersRepository : IUsersRepository
     {
-        private List<Models.User> users = new List<Models.User>
-        {
-            new Models.User(1, "Shadow", "0666123456", "ultimate_lifeform@chaos.gov", "Maria4Ever"),
-            new Models.User(2, "Sonic", "0666987654", "gotta_go_fast@blueblur.com", "ChiliDogLover"),
-            new Models.User(3, "Knuckles", "0666554433", "guardian@angelisland.net", "MasterEmerald123"),
-            new Models.User(4, "Tails", "0666778899", "two_tails@miles.com", "FlyHigh123"),
-            new Models.User(5, "Amy", "0666112233", "piko_hammer@heartbreak.com", "SonicMine"),
-            new Models.User(6, "Dr. Eggman", "0666000001", "evil_genius@eggman.net", "WorldDomination"),
-            new Models.User(7, "Rouge", "0666998877", "gem_hunter@treasure.com", "ShinyThings"),
-            new Models.User(8, "Silver", "0666121212", "future_hero@psychic.com", "SaveTheFuture"),
-            new Models.User(9, "Blaze", "0666345678", "princess@sol.com", "Pyrokinesis"),
-            new Models.User(10, "Cream", "0666789123", "sweet_rabbit@cheese.com", "ChaoLover")
-        };
+        private List<User> users;
 
-        public List<Models.User> GetAll()
+        public DummyUsersRepository() // My genius is thriving, instatiating the list in the constructor allows me to have persistent changes, until a complete restart, of course.
+        {
+            users = new List<User>
+            {
+                new User(1, "Shadow", "0666123456", "ultimate_lifeform@chaos.gov", "Maria4Ever"),
+                new User(2, "Sonic", "0666987654", "gotta_go_fast@blueblur.com", "ChiliDogLover"),
+                new User(3, "Knuckles", "0666554433", "guardian@angelisland.net", "MasterEmerald123"),
+                new User(4, "Tails", "0666778899", "two_tails@miles.com", "FlyHigh123"),
+                new User(5, "Amy", "0666112233", "piko_hammer@heartbreak.com", "SonicMine"),
+                new User(6, "Dr. Eggman", "0666000001", "evil_genius@eggman.net", "WorldDomination"),
+                new User(7, "Rouge", "0666998877", "gem_hunter@treasure.com", "ShinyThings"),
+                new User(8, "Silver", "0666121212", "future_hero@psychic.com", "SaveTheFuture"),
+                new User(9, "Blaze", "0666345678", "princess@sol.com", "Pyrokinesis"),
+                new User(10, "Cream", "0666789123", "sweet_rabbit@cheese.com", "ChaoLover")
+            };
+        }
+
+        public List<User> GetAll()
         {
             return users;
         }
 
-        public Models.User? GetById(int userId)
+        public User? GetById(int userId)
         {
             return users.FirstOrDefault(x => x.UserId == userId);
         }
@@ -37,12 +42,14 @@ namespace MvcWhatsUp.Repositories
             {
                 throw new InvalidOperationException("User with the same ID already exists. Chaos Control failed!");
             }
+            int newId = users.Count > 0 ? users.Max(u => u.UserId) + 1 : 1; // This is where you specify the userid - Finds highest user id, if list is empty, default is 1
+            user.UserId = newId;
             users.Add(user);
         }
 
         public void Update(User user)
         {
-            var existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
+            User existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
             if (existingUser == null)
             {
                 throw new InvalidOperationException("Agent not found. Perhaps they vanished into the Chaos Void.");
@@ -60,7 +67,7 @@ namespace MvcWhatsUp.Repositories
                 throw new ArgumentNullException(nameof(user), "Agent object cannot be null.");
             }
 
-            var existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
+            User existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
             if (existingUser != null)
             {
                 users.Remove(existingUser);
