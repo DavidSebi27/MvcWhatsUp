@@ -14,7 +14,7 @@ namespace MvcWhatsUp.Controllers
         }
         public IActionResult Index()
         {
-           List<User> users = _usersRepository.GetAll();
+            List<User> users = _usersRepository.GetAll();
             return View(users);
         }
 

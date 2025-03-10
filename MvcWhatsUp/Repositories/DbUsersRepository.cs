@@ -6,7 +6,6 @@ namespace MvcWhatsUp.Repositories
     public class DbUsersRepository : IUsersRepository
     {
         private readonly string? _connectionString;
-        private List<User> users = new List<User>();
 
         public DbUsersRepository(IConfiguration configuration)
         {
@@ -26,10 +25,11 @@ namespace MvcWhatsUp.Repositories
 
         public List<User> GetAll()
         {
+            List<User> users = new List<User>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT UserId, UserName, MobileNumber, EmailAddress FROM Users;";
+                string query = "SELECT UserId, UserName, MobileNumber, EmailAddress, Password FROM Users;";
                 SqlCommand cmd = new SqlCommand(query, connection);
 
                 cmd.Connection.Open();
@@ -47,49 +47,80 @@ namespace MvcWhatsUp.Repositories
 
         public User? GetById(int userId)
         {
-            return users.FirstOrDefault(x => x.UserId == userId);
+            User user = new User();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = $"SELECT UserId, UserName, MobileNumber, EmailAddress, Password FROM Users WHERE Users.UserId = {userId};";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                     user = ReadUser(reader);
+                }
+                reader.Close();
+            }
+            return user;
+
+
         }
 
         public void Add(User user)
         {
-            /*if (users.Any(u => u.UserId == user.UserId))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                throw new InvalidOperationException("User with the same ID already exists. Chaos Control failed!");
+                string query = "INSERT INTO Users (UserName, MobileNumber, EmailAddress, Password)" +
+                                "VALUES (@Name, @Number, @Email, @Password);" +
+                                "SELECT SCOPE_IDENTITY();";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@Name", user.UserName);
+                cmd.Parameters.AddWithValue("@Number", user.MobileNumber);
+                cmd.Parameters.AddWithValue("@Email", user.EmailAddress);
+                cmd.Parameters.AddWithValue("@Password", user.Password);
+
+                cmd.Connection.Open();
+                user.UserId = Convert.ToInt32(cmd.ExecuteScalar());
             }
-            int newId = users.Count > 0 ? users.Max(u => u.UserId) + 1 : 1; // This is where you specify the userid - Finds highest user id, if list is empty, default is 1
-            user.UserId = newId;
-            users.Add(user);*/
         }
 
         public void Update(User user)
         {
-            /*User existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
-            if (existingUser == null)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                throw new InvalidOperationException("Agent not found. Perhaps they vanished into the Chaos Void.");
+                string query = $"UPDATE Users SET UserName = @Name, MobileNumber = @Number, EmailAddress = @Email, Password = @Password " +
+                    "WHERE Users.UserId = @Id;";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@Id", user.UserId);
+                cmd.Parameters.AddWithValue("@Name", user.UserName);
+                cmd.Parameters.AddWithValue("@Number", user.MobileNumber);
+                cmd.Parameters.AddWithValue("@Email", user.EmailAddress);
+                cmd.Parameters.AddWithValue("@Password", user.Password);
+
+                cmd.Connection.Open();
+
+                int nrOfRowsAffected = cmd.ExecuteNonQuery();
+                if (nrOfRowsAffected == 0)
+                {
+                    throw new Exception("No records updated!");
+                }
             }
-            existingUser.UserName = user.UserName;
-            existingUser.MobileNumber = user.MobileNumber;
-            existingUser.EmailAddress = user.EmailAddress;
-            existingUser.Password = user.Password;*/
         }
 
         public void Delete(User user)
         {
-            /*if (user == null)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                throw new ArgumentNullException(nameof(user), "Agent object cannot be null.");
-            }
+                string query = $"DELETE FROM Users WHERE UserId = @Id";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Id", user.UserId);
 
-            User existingUser = users.FirstOrDefault(u => u.UserId == user.UserId);
-            if (existingUser != null)
-            {
-                users.Remove(existingUser);
+                cmd.Connection.Open();
             }
-            else
-            {
-                throw new InvalidOperationException("Agent not found. They’ve gone rogue and disappeared into the shadows.");
-            }*/
         }
     }
 }
