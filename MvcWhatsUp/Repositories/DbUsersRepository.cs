@@ -1,5 +1,6 @@
 ﻿using MvcWhatsUp.Models;
 using Microsoft.Data.SqlClient;
+using MvcWhatsUp.Services;
 
 namespace MvcWhatsUp.Repositories
 {
@@ -18,7 +19,7 @@ namespace MvcWhatsUp.Repositories
             string name = (string)reader["UserName"];
             string mobileNumber = (string)reader["MobileNumber"];
             string emailAddress = (string)reader["EmailAddress"];
-            string password = (string)reader["Password"];
+            string password = (string)reader["AuthData"];
 
             return new User(id, name, mobileNumber, emailAddress, password);
         }
@@ -29,7 +30,7 @@ namespace MvcWhatsUp.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT UserId, UserName, MobileNumber, EmailAddress, Password FROM Users;";
+                string query = "SELECT UserId, UserName, MobileNumber, EmailAddress, AuthData FROM Users;";
                 SqlCommand cmd = new SqlCommand(query, connection);
 
                 cmd.Connection.Open();
@@ -51,7 +52,7 @@ namespace MvcWhatsUp.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"SELECT UserId, UserName, MobileNumber, EmailAddress, Password FROM Users WHERE Users.UserId = {userId};";
+                string query = $"SELECT UserId, UserName, MobileNumber, EmailAddress, AuthData FROM Users WHERE Users.UserId = {userId};";
                 SqlCommand cmd = new SqlCommand(query, connection);
 
                 cmd.Connection.Open();
@@ -70,9 +71,15 @@ namespace MvcWhatsUp.Repositories
 
         public void Add(User user)
         {
+
+            //generate salt and hash password
+            byte[] salt = PasswordHasher.GenerateSalt();
+            string hashedPassword = PasswordHasher.HashPassword(user.Password, salt);
+
+
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Users (UserName, MobileNumber, EmailAddress, Password)" +
+                string query = "INSERT INTO Users (UserName, MobileNumber, EmailAddress, AuthData)" +
                                 "VALUES (@Name, @Number, @Email, @Password);" +
                                 "SELECT SCOPE_IDENTITY();";
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -80,7 +87,7 @@ namespace MvcWhatsUp.Repositories
                 cmd.Parameters.AddWithValue("@Name", user.UserName);
                 cmd.Parameters.AddWithValue("@Number", user.MobileNumber);
                 cmd.Parameters.AddWithValue("@Email", user.EmailAddress);
-                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@Password", hashedPassword);
 
                 cmd.Connection.Open();
                 user.UserId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -89,9 +96,15 @@ namespace MvcWhatsUp.Repositories
 
         public void Update(User user)
         {
+
+            //generate salt and hash password
+            byte[] salt = PasswordHasher.GenerateSalt();
+            string hashedPassword = PasswordHasher.HashPassword(user.Password, salt);
+
+
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"UPDATE Users SET UserName = @Name, MobileNumber = @Number, EmailAddress = @Email, Password = @Password " +
+                string query = "UPDATE Users SET UserName = @Name, MobileNumber = @Number, EmailAddress = @Email, AuthData = @Password " +
                     "WHERE Users.UserId = @Id;";
                 SqlCommand cmd = new SqlCommand(query, connection);
 
@@ -99,7 +112,7 @@ namespace MvcWhatsUp.Repositories
                 cmd.Parameters.AddWithValue("@Name", user.UserName);
                 cmd.Parameters.AddWithValue("@Number", user.MobileNumber);
                 cmd.Parameters.AddWithValue("@Email", user.EmailAddress);
-                cmd.Parameters.AddWithValue("@Password", user.Password);
+                cmd.Parameters.AddWithValue("@Password", hashedPassword);
 
                 cmd.Connection.Open();
 
@@ -115,11 +128,18 @@ namespace MvcWhatsUp.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = $"DELETE FROM Users WHERE UserId = @Id";
+                string query = "DELETE FROM Users WHERE UserId = @Id";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Id", user.UserId);
 
                 cmd.Connection.Open();
+
+                int rowsAffected = cmd.ExecuteNonQuery();  // Actually executes the DELETE statement
+
+                if (rowsAffected == 0)
+                {
+                    throw new Exception("No records deleted! User might not exist.");
+                }
             }
         }
     }
