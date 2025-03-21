@@ -1,0 +1,26 @@
+﻿@model MvcWhatsUp.Models.Message
+@{
+    ViewData["Title"] = "Transmit Chaos";
+    User? receiverUser = ViewData["ReceiverUser"] as User;
+}
+
+<h1>Transmit Chaos to @receiverUser?.UserName</h1>
+
+<form asp-controller="Chats" asp-action="AddMessage" method="post" class="mt-4">
+    <fieldset>
+        <input asp-for="SenderUserId" type="hidden" />
+        <input asp-for="ReceiverUserId" type="hidden" />
+
+        <div class="mb-3">
+            <label asp-for="MessageText" class="form-label">Chaos Signal:</label>
+            <input asp-for="MessageText" class="form-control" required placeholder="Enter your encrypted message" />
+            <span asp-validation-for="MessageText" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="broadcast-btn">BROADCAST</button>
+    </fieldset>
+</form>
+
+<div class="mt-4">
+    <a href="@Url.Action("DisplayChat", new { id = Model.ReceiverUserId })" class="transmission-btn">VIEW TRANSMISSIONS</a>
+</div>

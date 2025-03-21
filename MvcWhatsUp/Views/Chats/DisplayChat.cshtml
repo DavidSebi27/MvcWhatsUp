@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MvcWhatsUp.Models.Message>
+@{
+    ViewData["Title"] = "Chaos Transmissions";
+    User? sendingUser = ViewData["sendingUser"] as User;
+    User? receivingUser = ViewData["receivingUser"] as User;
+}
+
+<a href="@Url.Action("AddMessage", new { id = receivingUser?.UserId })" class="transmission-btn">
+    <span class="send-message-icon">⚡</span>INITIATE TRANSMISSION
+</a>
+
+<h3>Chaos Network: @sendingUser?.UserName and @receivingUser?.UserName</h3>
+
+<div class="chat-container">
+    <table class="user-table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Signal</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in Model)
+            {
+                <tr>
+                    @if (message.SenderUserId == sendingUser?.UserId)
+                    {
+                        <td class="text-start signal-sent">@message.MessageText</td>
+                    }
+                    else
+                    {
+                        <td class="text-end signal-received">@message.MessageText</td>
+                    }
+                    <td>@message.SendAt.ToString("MM/dd/yyyy HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <p class="text-danger">No chaos signals detected. Initiate first transmission.</p>
+    </div>
+}

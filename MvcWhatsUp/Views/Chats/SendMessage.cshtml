@@ -1,6 +1,6 @@
 ﻿@model MvcWhatsUp.Models.SimpleMessage
 @{
-    ViewData["Title"] = "Send Message";
+    ViewData["Title"] = "Transmit Chaos";
 }
 
 <h1>Transmit Chaos</h1>
@@ -10,11 +10,9 @@
         <label for="name" class="form-label">Your Alias: </label>
         <input type="text" id="name" name="Name" asp-for="Name" class="form-control" required />
     </div>
-
     <div class="mb-3">
         <label for="message" class="form-label">Chaos Message: </label>
         <input type="text" id="message" name="MessageText" asp-for="MessageText" class="form-control" required />
     </div>
-
-    <button type="submit" class="btn btn-dark">Broadcast</button>
+    <button type="submit" class="broadcast-btn">BROADCAST</button>
 </form>

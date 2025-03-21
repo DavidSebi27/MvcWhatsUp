@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">Chaos Network</a>
 
@@ -36,6 +36,15 @@
                     </ul>
                 </div>
             </div>
+            @if (Context.Request.Cookies.ContainsKey("UserId"))
+            {
+                var userId = Context.Request.Cookies["UserId"];
+                var userName = ViewData["UserName"] as string ?? "ANONYMOUS";
+
+                <div class="terminal-user-status">
+                    <span class="terminal-user-status-text">OPERATIVE: <a href="@Url.Action("Profile", "Users")" class="terminal-user-status-name">@userName</a></span>
+                </div>
+            }
         </nav>
     </header>
 

@@ -7,5 +7,6 @@
         void Add(Models.User user);
         void Update(Models.User user);
         void Delete(Models.User user);
+        Models.User? GetLoginCredentials(string userName, string password);
     }
 }

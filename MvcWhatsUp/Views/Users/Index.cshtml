@@ -1,7 +1,12 @@
 ﻿@model List<MvcWhatsUp.Models.User>
 
 @{
-	ViewData["Title"] = "Chaos Agents";
+    ViewData["Title"] = "Chaos Agents";
+    int loggedInUserId = -1;
+    if (ViewData["UserId"] != null)
+    {
+        loggedInUserId = int.Parse(ViewData["UserId"].ToString());
+    }
 }
 
 <div class="text-center">
@@ -10,7 +15,7 @@
 </div>
 
 <div class="mb-4">
-    <a href="/Users/Create" class="btn btn-dark">Enlist New Agent</a>
+    <a href="/Users/Create" class="enlist-agent-btn">Enlist New Agent</a>
 </div>
 
 <table class="user-table">
@@ -31,12 +36,13 @@
                 <td class="username">@user.UserName</td>
                 <td>@user.MobileNumber</td>
                 <td>@user.EmailAddress</td>
-                <td>
-                    <!-- Edit Link -->
-                    <a href="/Users/Edit/@user.UserId" class="action-link edit-link" name="UserID">Edit</a>
-                    <span class="action-separator">|</span>
-                    <!-- Delete Link -->
-                    <a href="/Users/Delete/@user.UserId" class="action-link delete-link" name="UserId">Terminate</a>
+                <td class="action-cell">
+                    <div class="action-links">
+                        <a href="/Users/Edit/@user.UserId" class="action-link edit-link" name="UserID">Edit</a>
+                        <span class="action-separator">|</span>
+                        <a href="/Users/Delete/@user.UserId" class="action-link delete-link" name="UserId">Terminate</a>
+                    </div>
+                    <a href="/Chats/AddMessage/@user.UserId" class="glitch-contact-btn">Contact</a>
                 </td>
             </tr>
         }

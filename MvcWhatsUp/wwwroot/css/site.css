@@ -379,3 +379,829 @@ a {
         outline: none;
         box-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
     }
+
+/* Enhanced Glitch Contact Button with improved positioning */
+.glitch-contact-btn {
+    /* Existing styling */
+    display: inline-block;
+    position: relative;
+    padding: 5px 12px;
+    background-color: #111;
+    color: #a0a0a0;
+    border: 1px solid #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    /* New positioning */
+    margin: 0;
+    float: right;
+    width: 80px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+    .glitch-contact-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+        transition: all 0.5s ease;
+    }
+
+    .glitch-contact-btn::after {
+        content: 'ENCRYPT>';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        background-color: #ff0000;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.7, 0, 0.3, 1);
+        z-index: 1;
+    }
+
+    .glitch-contact-btn:hover {
+        color: #ff0000;
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+    }
+
+        .glitch-contact-btn:hover::before {
+            left: 100%;
+        }
+
+        .glitch-contact-btn:hover::after {
+            transform: translateX(0);
+            opacity: 0;
+            animation: glitch 0.8s steps(2) forwards;
+        }
+
+@keyframes glitch {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    20% {
+        transform: translateX(0);
+        opacity: 0.3;
+        clip-path: inset(0 0 50% 0);
+    }
+
+    40% {
+        transform: translateX(0);
+        opacity: 0.6;
+        clip-path: inset(50% 0 0 0);
+    }
+
+    60% {
+        transform: translateX(0);
+        opacity: 0.3;
+        clip-path: inset(25% 0 50% 0);
+    }
+
+    80% {
+        transform: translateX(0);
+        opacity: 0.1;
+        clip-path: inset(50% 0 25% 0);
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+}
+
+/* Enhanced cell structure for better alignment */
+.action-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action-links {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Repositioned User Login Display */
+.terminal-user-status {
+    position: absolute;
+    top: 100%;
+    right: 15px;
+    padding: 6px 12px;
+    background-color: #111;
+    border: 1px solid #ff0000;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 0, 0, 0.3);
+    z-index: 100;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+    .terminal-user-status::before {
+        content: '>';
+        color: #ff0000;
+        font-weight: bold;
+        margin-right: 8px;
+        animation: blink 1s infinite;
+    }
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.terminal-user-status:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+.terminal-user-status-text {
+    color: #bbbbbb;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+.terminal-user-status-name {
+    color: #ff0000;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* You need to update the navbar position for this to work */
+.navbar {
+    position: relative; 
+}
+
+// 1. First, add a new action method to UsersController.cs
+
+public IActionResult Profile() {
+    // Get the user ID from the cookie string? userIdStr = Request.Cookies["UserId"];
+    if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
+
+{
+    // If no user ID found or invalid, redirect to login return RedirectToAction("Login");
+}
+
+// Get the user details
+User? user = _usersRepository.GetById(userId);
+
+if (user == null) {
+    // If user not found, redirect to login Response.Cookies.Delete("UserId");
+    // Clear invalid cookie return RedirectToAction("Login");
+}
+
+return View(user);
+}
+
+// 2. Create a new Profile.cshtml view in Views/Users folder
+/*
+@model MvcWhatsUp.Models.User
+@{
+    ViewData["Title"] = "Operative Profile: " + Model.UserName;
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-id-badge">
+            <div class="profile-id-number">@Model.UserId</div>
+            <div class="profile-credential">CHAOS NETWORK</div>
+        </div>
+        
+        <h1 class="profile-title">OPERATIVE PROFILE</h1>
+    </div>
+    
+    <div class="profile-section">
+        <div class="profile-row">
+            <div class="profile-label">CODENAME:</div>
+            <div class="profile-value">@Model.UserName</div>
+        </div>
+        
+        <div class="profile-row">
+            <div class="profile-label">COMMS DEVICE:</div>
+            <div class="profile-value">@Model.MobileNumber</div>
+        </div>
+        
+        <div class="profile-row">
+            <div class="profile-label">CONTACT SIGNAL:</div>
+            <div class="profile-value">@Model.EmailAddress</div>
+        </div>
+        
+        <div class="profile-row">
+            <div class="profile-label">SECURITY LEVEL:</div>
+            <div class="profile-value">ALPHA</div>
+        </div>
+        
+        <div class="profile-row">
+            <div class="profile-label">STATUS:</div>
+            <div class="profile-value profile-status-active">ACTIVE</div>
+        </div>
+    </div>
+    
+    <div class="profile-actions">
+        <a href="@Url.Action("Edit", new { id = Model.UserId })" class="profile-action-btn edit-btn">
+            MODIFY CREDENTIALS
+        </a>
+        <a href="@Url.Action("Index")" class="profile-action-btn return-btn">
+            RETURN TO NETWORK
+        </a>
+    </div>
+</div>
+*/
+// 3. Add CSS for the profile page
+/*
+/* Profile Page Styles */
+.profile-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #0f0f0f;
+    border: 1px solid #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, #ff0000, transparent);
+    animation: scan-line 3s linear infinite;
+}
+
+@keyframes scan-line {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(900%);
+        opacity: 0;
+    }
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ff0000;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.profile-id-badge {
+    border: 2px solid #ff0000;
+    padding: 10px 20px;
+    display: inline-block;
+    background-color: #200000;
+    transform: rotate(-2deg);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.profile-id-number {
+    font-size: 2rem;
+    color: #ff0000;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.profile-credential {
+    font-size: 0.7rem;
+    color: #aaa;
+    letter-spacing: 2px;
+}
+
+.profile-title {
+    font-size: 2.2rem;
+    color: #ff0000;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 3px;
+}
+
+.profile-section {
+    margin-bottom: 30px;
+    background-color: rgba(255, 0, 0, 0.05);
+    padding: 20px;
+    border-left: 3px solid #ff0000;
+}
+
+.profile-row {
+    display: flex;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+}
+
+    .profile-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+.profile-label {
+    width: 180px;
+    color: #aaa;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.profile-value {
+    flex-grow: 1;
+    color: #fff;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+}
+
+.profile-status-active {
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+    position: relative;
+    padding-left: 20px;
+}
+
+    .profile-status-active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        background-color: #00ff00;
+        border-radius: 50%;
+        box-shadow: 0 0 5px #00ff00;
+        animation: pulse 2s infinite;
+    }
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.profile-action-btn {
+    padding: 12px 25px;
+    background-color: #111;
+    color: #a0a0a0;
+    border: 1px solid #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    .profile-action-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+        transition: all 0.5s ease;
+    }
+
+    .profile-action-btn:hover {
+        color: #ff0000;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+    }
+
+        .profile-action-btn:hover::before {
+            left: 100%;
+        }
+
+.edit-btn:hover {
+    border-color: #ff8800;
+    color: #ff8800;
+    box-shadow: 0 0 15px rgba(255, 136, 0, 0.5);
+}
+
+.return-btn:hover {
+    border-color: #00ffff;
+    color: #00ffff;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.terminal-user-status-name {
+    color: #ff0000;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: none;
+    position: relative;
+}
+
+    .terminal-user-status-name::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background-color: #ff0000;
+        transition: width 0.3s ease;
+    }
+
+    .terminal-user-status-name:hover {
+        text-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
+    }
+
+        .terminal-user-status-name:hover::after {
+            width: 100%;
+        }
+
+.logout-btn {
+    background-color: #111;
+    border-color: #880000;
+    color: #a0a0a0;
+}
+
+    .logout-btn:hover {
+        background-color: #330000;
+        color: #ff3333;
+        border-color: #ff3333;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+    }
+
+    .logout-btn::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: #ff0000;
+        border-radius: 50%;
+        top: 10px;
+        right: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .logout-btn:hover::after {
+        opacity: 1;
+        animation: blink 1s infinite;
+    }
+
+.enlist-agent-btn {
+    padding: 10px 20px;
+    background-color: #111;
+    color: #a0a0a0;
+    border: 1px solid #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+    .enlist-agent-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+        transition: all 0.5s ease;
+    }
+
+    .enlist-agent-btn:hover {
+        color: #ff0000;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+        transform: translateY(-2px);
+    }
+
+        .enlist-agent-btn:hover::before {
+            left: 100%;
+        }
+
+/* Enhanced action links in table */
+.action-link {
+    padding: 4px 10px;
+    background-color: rgba(17, 17, 17, 0.8);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    color: #a0a0a0;
+    font-size: 0.8rem;
+    font-family: 'Courier New', monospace;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    margin: 0 5px;
+}
+
+.edit-link:hover {
+    color: #ff8800;
+    border-color: #ff8800;
+    box-shadow: 0 0 10px rgba(255, 136, 0, 0.5);
+    text-shadow: 0 0 5px rgba(255, 136, 0, 0.5);
+}
+
+.delete-link:hover {
+    color: #ff3333;
+    border-color: #ff3333;
+    box-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+    text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+}
+
+.transmission-btn {
+    padding: 10px 22px;
+    background-color: #111;
+    color: #a0a0a0;
+    border: 1px solid #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+    .transmission-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+        transition: all 0.5s ease;
+    }
+
+    .transmission-btn:hover {
+        color: #ff0000;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+        transform: translateY(-2px);
+    }
+
+        .transmission-btn:hover::before {
+            left: 100%;
+        }
+
+/* Broadcast button style */
+.broadcast-btn {
+    padding: 10px 25px;
+    background-color: #111;
+    color: #a0a0a0;
+    border: 1px solid #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+    .broadcast-btn::after {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(255, 0, 0, 0.3);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease-out;
+        z-index: -1;
+    }
+
+    .broadcast-btn:hover {
+        color: #ff0000;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+    }
+
+        .broadcast-btn:hover::after {
+            transform: translate(-50%, -50%) scale(5);
+            opacity: 0;
+        }
+
+/* Chat Container Styles */
+.chat-container {
+    background-color: #111;
+    border: 1px solid #ff0000;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+    margin: 20px 0;
+    max-height: 600px;
+    overflow-y: auto;
+    position: relative;
+}
+
+    .chat-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .chat-container::-webkit-scrollbar-track {
+        background: #0a0a0a;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+        background: #400000;
+        border-radius: 4px;
+    }
+
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: #ff0000;
+        }
+
+/* Message Styles */
+.signal-sent {
+    color: #ff4d4d !important;
+    text-shadow: 0 0 3px rgba(255, 0, 0, 0.5);
+    font-weight: 500;
+    padding-left: 15px !important;
+    position: relative;
+}
+
+    .signal-sent::before {
+        content: '>';
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ff0000;
+    }
+
+.signal-received {
+    color: #bbbbbb;
+    padding-right: 15px !important;
+    position: relative;
+}
+
+    .signal-received::after {
+        content: '<';
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ff0000;
+    }
+
+/* Transmission button style */
+.transmission-btn {
+    padding: 10px 22px;
+    background-color: #111;
+    color: #a0a0a0;
+    border: 1px solid #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+    .transmission-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+        transition: all 0.5s ease;
+    }
+
+    .transmission-btn:hover {
+        color: #ff0000;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+        transform: translateY(-2px);
+    }
+
+        .transmission-btn:hover::before {
+            left: 100%;
+        }
+
+/* Broadcast button style */
+.broadcast-btn {
+    padding: 10px 25px;
+    background-color: #111;
+    color: #a0a0a0;
+    border: 1px solid #ff0000;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+    .broadcast-btn::after {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgba(255, 0, 0, 0.3);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease-out;
+        z-index: -1;
+    }
+
+    .broadcast-btn:hover {
+        color: #ff0000;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+        text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+    }
+
+        .broadcast-btn:hover::after {
+            transform: translate(-50%, -50%) scale(5);
+            opacity: 0;
+        }
+
+.send-message-icon {
+    margin-right: 8px;
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

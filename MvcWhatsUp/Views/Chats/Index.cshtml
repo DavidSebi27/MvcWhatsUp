@@ -1,6 +1,8 @@
-﻿<h1>Chaos Communication Hub</h1>
+﻿@{
+    ViewData["Title"] = "Chaos Communication Hub";
+}
+
+<h1>Chaos Communication Hub</h1>
 <p>No messages yet. Be the first to ignite the chaos.</p>
 
-<form asp-controller="Chats" asp-action="SendMessage" method="get">
-    <button type="submit" class="btn btn-dark">Initiate Transmission</button>
-</form>
+<a href="@Url.Action("SendMessage")" class="transmission-btn">INITIATE TRANSMISSION</a>

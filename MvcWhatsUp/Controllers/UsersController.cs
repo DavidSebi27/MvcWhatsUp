@@ -4,16 +4,31 @@ using MvcWhatsUp.Repositories;
 
 namespace MvcWhatsUp.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly IUsersRepository _usersRepository;
 
-        public UsersController(IUsersRepository usersRepository) // Without this it just doesnt save (?) - This is where we inject the thing
+
+        public UsersController(IUsersRepository usersRepository) : base(usersRepository)
         {
             _usersRepository = usersRepository;
         }
+
         public IActionResult Index()
         {
+            string? userIdStr = Request.Cookies["UserId"];
+            int? userId = null;
+            string? userName = null;
+
+            if (!string.IsNullOrEmpty(userIdStr) && int.TryParse(userIdStr, out int id))
+            {
+                userId = id;
+                userName = GetUserNameById(id);
+            }
+
+            ViewData["UserId"] = userId;
+            ViewData["UserName"] = userName;
+
             List<User> users = _usersRepository.GetAll();
             return View(users);
         }
@@ -23,9 +38,40 @@ namespace MvcWhatsUp.Controllers
             return View();
         }
         [HttpPost]
-        public string Login(string name, string password)
+        public IActionResult Login(LoginModel loginModel)
         {
-            return $"Logging {name} in...";
+            User? user = _usersRepository.GetLoginCredentials(loginModel.UserName, loginModel.Password);
+
+            if (user == null)
+            {
+                // Login failed
+                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                return View(loginModel);
+            }
+            else
+            {
+                // Login successful - store user ID in cookie
+
+                // Set cookie options for security
+                var cookieOptions = new CookieOptions
+                {
+                    // Make cookie expire in 7 days
+                    Expires = DateTime.Now.AddDays(7),
+
+                    // Prevent JavaScript access to cookie
+                    HttpOnly = true,
+
+
+                    // Restrict cookie to your site
+                    SameSite = SameSiteMode.Strict
+                };
+
+                // Store user ID in cookie
+                Response.Cookies.Append("UserId", user.UserId.ToString(), cookieOptions);
+
+                // Redirect to index
+                return RedirectToAction("Index", "Users");
+            }
         }
 
         [HttpGet]
@@ -98,6 +144,47 @@ namespace MvcWhatsUp.Controllers
 
                 return View(user);
             }
+        }
+
+        private string GetUserNameById(int userId)
+        {
+            User? user = _usersRepository.GetById(userId);
+            return user?.UserName ?? "Unknown Agent";
+        }
+
+        public IActionResult Profile()
+        {
+            // Get the user ID from the cookie
+            string? userIdStr = Request.Cookies["UserId"];
+
+            if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
+            {
+                // If no user ID found or invalid, redirect to login
+                return RedirectToAction("Login");
+            }
+
+            // Get the user details
+            User? user = _usersRepository.GetById(userId);
+
+            if (user == null)
+            {
+                // If user not found, redirect to login
+                Response.Cookies.Delete("UserId"); // Clear invalid cookie
+                return RedirectToAction("Login");
+            }
+
+            ViewData["UserName"] = user.UserName;
+
+            return View(user);
+        }
+
+        public IActionResult Logout()
+        {
+            // Delete the authentication cookie
+            Response.Cookies.Delete("UserId");
+
+            // Redirect to login page
+            return RedirectToAction("Login");
         }
     }
 }

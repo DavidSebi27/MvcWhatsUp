@@ -142,5 +142,35 @@ namespace MvcWhatsUp.Repositories
                 }
             }
         }
+
+        public User? GetLoginCredentials(string userName, string password)
+        {
+            User? user = null;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                // First get the user by username to retrieve the hashed password
+                string query = "SELECT UserId, UserName, MobileNumber, EmailAddress, AuthData FROM Users WHERE UserName = @UserName;";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@UserName", userName);
+
+                cmd.Connection.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    user = ReadUser(reader);
+                }
+                reader.Close();
+            }
+
+            // If user exists, verify the password using PasswordHasher
+            if (user != null && PasswordHasher.VerifyPassword(password, user.Password))
+            {
+                return user;
+            }
+
+            return null;
+        }
     }
 }

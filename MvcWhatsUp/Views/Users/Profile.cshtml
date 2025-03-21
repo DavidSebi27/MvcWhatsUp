@@ -1,0 +1,54 @@
+﻿@model MvcWhatsUp.Models.User
+@{
+    ViewData["Title"] = "Operative Profile: " + Model.UserName;
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-id-badge">
+            <div class="profile-id-number">@Model.UserId</div>
+            <div class="profile-credential">CHAOS NETWORK</div>
+        </div>
+
+        <h1 class="profile-title">OPERATIVE PROFILE</h1>
+    </div>
+
+    <div class="profile-section">
+        <div class="profile-row">
+            <div class="profile-label">CODENAME:</div>
+            <div class="profile-value">@Model.UserName</div>
+        </div>
+
+        <div class="profile-row">
+            <div class="profile-label">COMMS DEVICE:</div>
+            <div class="profile-value">@Model.MobileNumber</div>
+        </div>
+
+        <div class="profile-row">
+            <div class="profile-label">CONTACT SIGNAL:</div>
+            <div class="profile-value">@Model.EmailAddress</div>
+        </div>
+
+        <div class="profile-row">
+            <div class="profile-label">SECURITY LEVEL:</div>
+            <div class="profile-value">ALPHA</div>
+        </div>
+
+        <div class="profile-row">
+            <div class="profile-label">STATUS:</div>
+            <div class="profile-value profile-status-active">ACTIVE</div>
+        </div>
+    </div>
+
+    <div class="profile-actions">
+        <a href="@Url.Action("Edit", new { id = Model.UserId })" class="profile-action-btn edit-btn">
+            MODIFY CREDENTIALS
+        </a>
+        <a href="@Url.Action("Index")" class="profile-action-btn return-btn">
+            RETURN TO NETWORK
+        </a>
+        <a href="@Url.Action("Logout")" class="profile-action-btn logout-btn">
+            TERMINATE SESSION
+        </a>
+    </div>
+</div>

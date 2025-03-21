@@ -1,16 +1,14 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MvcWhatsUp.Models;
+using MvcWhatsUp.Repositories;
 
 namespace MvcWhatsUp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUsersRepository usersRepository) : base(usersRepository)
         {
-            _logger = logger;
         }
 
         public IActionResult Index()
