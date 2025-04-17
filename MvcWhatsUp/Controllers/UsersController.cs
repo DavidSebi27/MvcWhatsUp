@@ -45,7 +45,7 @@ namespace MvcWhatsUp.Controllers
             if (user == null)
             {
                 // Login failed
-                ModelState.AddModelError(string.Empty, "Invalid username or password");
+                ViewBag.ErrorMessage = "Invalid username or password.";
                 return View(loginModel);
             }
             else

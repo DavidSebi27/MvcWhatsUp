@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MvcWhatsUp.Models;
 using MvcWhatsUp.Repositories;
+using MvcWhatsUp.ViewModels;
 
 namespace MvcWhatsUp.Controllers
 {
@@ -59,6 +60,9 @@ namespace MvcWhatsUp.Controllers
                 // Add the message to the database
                 _chatsRepository.AddMessage(message);
 
+                // Confirmation
+                TempData["ConfirmMessage"] = "Message sent successfully!";
+
                 // Go to chat with the other user
                 return RedirectToAction("DisplayChat", new { id = message.ReceiverUserId });
             }
@@ -78,7 +82,7 @@ namespace MvcWhatsUp.Controllers
                 return RedirectToAction("Index", "Users");
 
             // User needs to be logged in
-            // (for now, id of logged in user is stored in a cookie)
+            // (for now, id of logged in user is stored in a cookie)    
             string? loggedInUserId = Request.Cookies["UserId"];
             if (loggedInUserId == null)
                 return RedirectToAction("Index", "Users");
@@ -89,16 +93,15 @@ namespace MvcWhatsUp.Controllers
             if ((sendingUser == null) || (receivingUser == null))
                 return RedirectToAction("Index", "Users");
 
-            // Pass users to View via ViewData
-            ViewData["sendingUser"] = sendingUser;
-            ViewData["receivingUser"] = receivingUser;
-
             // Get all messages between 2 users
             List<Message> chatMessages = _chatsRepository.GetMessages(
                 sendingUser.UserId, receivingUser.UserId);
 
+            // Pass users to View via ViewModel
+            ChatViewModel chatViewModel = new ChatViewModel(chatMessages, sendingUser, receivingUser);
+
             // Pass data to view
-            return View(chatMessages);
+            return View(chatViewModel);
         }
 
         // GET: /Chats/SendMessage

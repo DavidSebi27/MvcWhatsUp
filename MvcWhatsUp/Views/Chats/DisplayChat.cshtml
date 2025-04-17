@@ -1,15 +1,22 @@
-﻿@model IEnumerable<MvcWhatsUp.Models.Message>
+﻿@model MvcWhatsUp.ViewModels.ChatViewModel
 @{
     ViewData["Title"] = "Chaos Transmissions";
-    User? sendingUser = ViewData["sendingUser"] as User;
-    User? receivingUser = ViewData["receivingUser"] as User;
 }
 
-<a href="@Url.Action("AddMessage", new { id = receivingUser?.UserId })" class="transmission-btn">
+<a href="@Url.Action("AddMessage", new { Model.ReceivingUser.UserId })" class="transmission-btn">
     <span class="send-message-icon">⚡</span>INITIATE TRANSMISSION
 </a>
 
-<h3>Chaos Network: @sendingUser?.UserName and @receivingUser?.UserName</h3>
+@{
+	if (TempData["ConfirmMessage"] != null)
+	{
+		<div class="alert alert-danger mt-3">
+			@TempData["ConfirmMessage"]
+		</div>
+	}
+}
+
+<h3>Chaos Network: @Model.SendingUser.UserName and @Model.ReceivingUser.UserName</h3>
 
 <div class="chat-container">
     <table class="user-table table-hover">
@@ -20,10 +27,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var message in Model)
+            @foreach (var message in Model.Messages)
             {
                 <tr>
-                    @if (message.SenderUserId == sendingUser?.UserId)
+                    @if (message.SenderUserId == Model.SendingUser.UserId)
                     {
                         <td class="text-start signal-sent">@message.MessageText</td>
                     }
@@ -38,7 +45,7 @@
     </table>
 </div>
 
-@if (!Model.Any())
+@if (!Model.Messages.Any())
 {
     <div class="text-center mt-5">
         <p class="text-danger">No chaos signals detected. Initiate first transmission.</p>

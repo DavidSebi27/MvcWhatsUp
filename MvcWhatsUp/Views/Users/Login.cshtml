@@ -7,6 +7,15 @@
 <h1>Access Terminal</h1>
 <p>Enter your credentials to access the Chaos Network. Unauthorized access is prohibited.</p>
 
+@{
+	if (ViewBag.ErrorMessage!= null)
+	{
+        <div class="profile-id-badge text-danger">
+			@ViewBag.ErrorMessage
+		</div>
+	}
+}
+
 <form asp-controller="Users" asp-action="Login" method="post" class="mt-4">
     <fieldset>
         <div class="mb-3">
